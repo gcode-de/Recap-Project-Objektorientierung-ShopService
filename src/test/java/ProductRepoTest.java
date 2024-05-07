@@ -26,11 +26,12 @@ class ProductRepoTest {
         ProductRepo repo = new ProductRepo();
 
         //WHEN
-        Product actual = repo.getProductById("1").get();
+        Optional<Product> actualOptional = repo.getProductById("1");
 
         //THEN
         Product expected = new Product("1", "Apfel");
-        assertEquals(actual, expected);
+        assertTrue(actualOptional.isPresent());
+        assertEquals(expected, actualOptional.get());
     }
 
     @org.junit.jupiter.api.Test

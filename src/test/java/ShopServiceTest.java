@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.rmi.NoSuchObjectException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ShopServiceTest {
 
     @Test
-    void addOrderTest() {
+    void addOrderTest() throws NoSuchObjectException {
         //GIVEN
         ShopService shopService = new ShopService();
         List<String> productsIds = List.of("1");
@@ -24,20 +24,19 @@ class ShopServiceTest {
     }
 
     @Test
-    void addOrderTest_whenInvalidProductId_expectNull() {
+    void addOrderTest_whenInvalidProductId_throw() {
         //GIVEN
         ShopService shopService = new ShopService();
-        List<String> productsIds = List.of("1", "2");
+        List<String> productIds = List.of("1", "2");
 
         //WHEN
-        Order actual = shopService.addOrder(productsIds);
 
         //THEN
-        assertNull(actual);
+        assertThrows(NoSuchObjectException.class, () -> shopService.addOrder(productIds));
     }
 
     @Test
-    void getOrdersByStatusTest () {
+    void getOrdersByStatusTest () throws NoSuchObjectException {
         //GIVEN
         ShopService shopService = new ShopService();
         List<String> productsIds = List.of("1");
